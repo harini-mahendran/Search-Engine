@@ -1,0 +1,75 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class SimpleSearchQueryApp {
+
+    // Predefined data for simulation
+    private static final String[] sampleData = {
+            "Java is a programming language.",
+            "Java AWT is a GUI toolkit.",
+            "Java programming is fun.",
+            "AWT stands for Abstract Window Toolkit.",
+            "Search engines help you find information."
+    };
+
+    // Main GUI and Application Logic
+    public static void main(String[] args) {
+        Frame frame = new Frame("Simple Search Query Application");
+        frame.setSize(500, 400);
+        frame.setLayout(new FlowLayout());
+
+        // Label and TextField for user input
+        Label searchLabel = new Label("Enter Search Query:");
+        TextField searchField = new TextField(30);
+
+        // Button to trigger the search
+        Button searchButton = new Button("Search");
+
+        // TextArea to display search results
+        TextArea resultArea = new TextArea(10, 40);
+        resultArea.setEditable(false);
+
+        // Add components to frame
+        frame.add(searchLabel);
+        frame.add(searchField);
+        frame.add(searchButton);
+        frame.add(resultArea);
+
+        // Search button action listener
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String query = searchField.getText().trim().toLowerCase();
+                resultArea.setText("");  // Clear previous results
+
+                if (query.isEmpty()) {
+                    resultArea.append("Please enter a search query.\n");
+                } else {
+                    boolean found = false;
+                    // Search through the predefined data
+                    for (String data : sampleData) {
+                        if (data.toLowerCase().contains(query)) {
+                            resultArea.append("Found: " + data + "\n");
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        resultArea.append("No results found for query: " + query + "\n");
+                    }
+                }
+            }
+        });
+
+        // Set up window closing behavior
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+}
